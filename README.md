@@ -1,5 +1,5 @@
-### Signal Processing Final Project
+# Signal Processing Final Project
 
-# Single Channel Source Separation
+### Single Channel Source Separation
 
 
