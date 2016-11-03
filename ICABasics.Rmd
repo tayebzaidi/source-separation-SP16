@@ -1,0 +1,28 @@
+#Using R ICA package for multiple channel signal separation
+
+```{r}
+require(ica)
+```
+
+```{r}
+s1 = function(x) {
+  return(cos(x) + 4)
+}
+s2 = function(x) {
+  return(cos(2*x))
+}
+tt = seq(0,10,length=1000)
+s1.y = s1(tt)
+s2.y = s2(tt)
+plot(tt,s1.y,type='l', ylim=c(-8,8))
+lines(tt,s2.y)
+
+m = cbind(c(s1.y-s2.y),c(s1.y+s2.y))
+
+res = icafast(m,2)
+s1.approx = res$S[,1]
+s2.approx = res$S[,2]
+lines(tt,s1.approx, col='blue')
+lines(tt,s2.approx, col='blue')
+```
+
