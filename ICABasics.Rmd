@@ -26,3 +26,29 @@ lines(tt,s1.approx, col='blue')
 lines(tt,s2.approx, col='blue')
 ```
 
+
+```{r}
+s1 = function(x) {
+  return(cos(x) + 4)
+}
+s2 = function(x) {
+  return(cos(2*x))
+}
+tt = seq(0,10,length=1000)
+s1.y = s1(tt)
+s2.y = s2(tt)
+plot(tt,s1.y,type='l', ylim=c(-8,8))
+lines(tt,s2.y)
+
+s1.avg = mean(s1.y)
+s2.avg = mean(s2.y)
+
+m = cbind(c(s1.y - s1.avg),c(s2.y - s2.avg))
+
+res = icafast(m,2)
+s1.approx = res$S[,1]
+s2.approx = res$S[,2]
+lines(tt,s1.approx + s1.avg, col='blue')
+lines(tt,s2.approx + s2.avg, col='blue')
+```
+

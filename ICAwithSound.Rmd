@@ -1,0 +1,31 @@
+#Using R ICA package for multiple channel signal separation
+
+```{r}
+require(ica)
+require(phonTools)
+```
+
+```{r}
+glock.data = loadsound(file.choose())
+pleasant.data = loadsound(file.choose())
+n = max(length(glock.data$sound),length(pleasant.data$sound))
+
+glock = makesound(glock.data$sound[1:n])
+pleasant = makesound(pleasant.data$sound[1:n])
+plot(glock)
+plot(pleasant)
+```
+
+```{r}
+
+m = cbind(c(glock$sound-pleasant$sound),c(glock$sound+2*pleasant$sound))
+m[is.na(m)] = 0
+res = icafast(m,2)
+s1.approx = res$S[,1]
+s2.approx = res$S[,2]
+
+glock.reconstructed = makesound(s1.approx)
+pleasant.reconstructed = makesound(s2.approx)
+play(glock)
+play(glock.reconstructed)
+```
